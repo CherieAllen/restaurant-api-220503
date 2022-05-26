@@ -1,5 +1,7 @@
 import connectDb from "../connectDb.js";
 
+
+
 export function getAllRestaurants(req, res) {
   const db = connectDb();
   db.collection("restaurants").get()
@@ -81,4 +83,14 @@ export function deleteRestaurant(req, res) {
     .catch(err => {
       res.status(500).send(err);
     });
+}
+
+
+export function updateRestaurantRating(req, res) {
+  const {restaurantId} =req.params;
+  if(!req.body || ! req.body.rating|| req.body.rating > 5 || req.body.rating < 0){
+    res.status (401).send('Invalid Request')
+    return;
+  }
+  const newRating =req.body.rating;
 }
