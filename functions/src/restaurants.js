@@ -93,4 +93,25 @@ export function updateRestaurantRating(req, res) {
     return;
   }
   const newRating =req.body.rating;
-}
+  const db=connectDb();
+  db.collection('restaurants').doc(restaurantId).get()
+
+    .then((doc) => {
+      const{ratingList} = doc.data();
+      const newRatingList = (ratingList) ? [...ratingList,newRating] : [newRating]
+      const numRatings = newRatingList.length
+      const rating = newRatingList.reduce((accum,elem) => accum + elem, 0)/newRating;
+      const updatedData ={ratingList:newRatingList,numRatings,rating}
+      db.collection('restaurants').doc(restaurantId).update(updatedData)
+        .then(() => getRestaurantById(req,res))
+    })
+    .catch((err)=> {
+      res.status(500).send(err)
+      return;
+    })
+  }
+
+
+
+
+

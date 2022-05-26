@@ -13,7 +13,7 @@ app.get('/restaurants', getAllRestaurants);
 app.get('/restaurants/:restaurantId', getRestaurantById);
 app.delete('/restaurants/:restaurantId', deleteRestaurant);
 app.patch('/restaurants/:restaurantId', updateRestaurant);
-app.patch('/restaurants/:restaurantsId/rating',updateRestaurantRating);
+app.patch('/restaurants/:restaurantId/rating',updateRestaurantRating);
 app.post('/restaurants', addRestaurant);
 
 export const api = functions.https.onRequest(app);
